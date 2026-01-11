@@ -1,0 +1,927 @@
+     <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jyoti Model works Inc. - Our Workplace</title>
+    <style>
+        /* Global Styles - Same as main page */
+        :root {
+            --primary-color: #0077b6;
+            --secondary-color: #00b4d8;
+            --dark-color: #03045e;
+            --light-color: #caf0f8;
+            --text-color: #ffffff;
+            --box-bg: rgba(0, 0, 0, 0.9);
+            --theme-gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: var(--theme-gradient);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles - Same as main page */
+        header {
+            background-color: var(--box-bg);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        header.hidden {
+            transform: translateY(-100%);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo img {
+            height: 50px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(to right, var(--light-color), #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links li {
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            position: relative;
+            transition: all 0.3s ease;
+            background: var(--theme-gradient);
+            box-shadow: 0 4px 15px rgba(0, 180, 216, 0.3);
+        }
+        
+        .nav-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 180, 216, 0.5);
+        }
+        
+        /* Hero Section - Workplace Version */
+        .workplace-hero {
+            margin-top: 80px;
+            height: 80vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1581093450021-4a7360e9a7e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+        }
+        
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: var(--box-bg);
+            border-radius: 20px;
+            padding: 4rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content {
+            flex: 1;
+            padding-right: 3rem;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+        
+        .hero-content.animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .hero-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--light-color), #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero-content p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: var(--theme-gradient);
+            color: white;
+            box-shadow: 0 5px 20px rgba(0, 180, 216, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--light-color);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 180, 216, 0.6);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        /* Main Content Sections */
+        .section {
+            padding: 5rem 2rem;
+        }
+        
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: var(--box-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--light-color), #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .section-title.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Workplace Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+        
+        .feature-card.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .feature-card:nth-child(1) { transition-delay: 0.1s; }
+        .feature-card:nth-child(2) { transition-delay: 0.2s; }
+        .feature-card:nth-child(3) { transition-delay: 0.3s; }
+        .feature-card:nth-child(4) { transition-delay: 0.4s; }
+        .feature-card:nth-child(5) { transition-delay: 0.5s; }
+        .feature-card:nth-child(6) { transition-delay: 0.6s; }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        }
+        
+        .feature-card i {
+            font-size: 3rem;
+            color: var(--light-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        /* Lab Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 250px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+        
+        .gallery-item.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .gallery-item:nth-child(1) { transition-delay: 0.1s; }
+        .gallery-item:nth-child(2) { transition-delay: 0.2s; }
+        .gallery-item:nth-child(3) { transition-delay: 0.3s; }
+        .gallery-item:nth-child(4) { transition-delay: 0.4s; }
+        .gallery-item:nth-child(5) { transition-delay: 0.5s; }
+        .gallery-item:nth-child(6) { transition-delay: 0.6s; }
+        
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .team-member {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+        
+        .team-member.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .team-member:nth-child(1) { transition-delay: 0.1s; }
+        .team-member:nth-child(2) { transition-delay: 0.2s; }
+        .team-member:nth-child(3) { transition-delay: 0.3s; }
+        .team-member:nth-child(4) { transition-delay: 0.4s; }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        }
+        
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 3px solid var(--light-color);
+        }
+        
+        .team-member h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-member p {
+            color: var(--light-color);
+            margin-bottom: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--light-color);
+            transform: translateY(-3px);
+        }
+        
+        /* Video Tour Section */
+        .video-tour {
+            margin: 3rem 0;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s ease;
+        }
+        
+        .video-container.animated {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Careers Section */
+        .about-content {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .about-text {
+            flex: 2;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+        
+        .about-text.animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .about-image {
+            flex: 1;
+            text-align: center;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease 0.2s;
+        }
+        
+        .about-image.animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .about-image img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            transition: all 0.3s ease;
+        }
+        
+        .about-image img:hover {
+            transform: scale(1.03);
+        }
+        
+        /* Footer - Same as main page */
+        footer {
+            background-color: var(--box-bg);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        footer.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--light-color);
+        }
+        
+        .social-links-footer {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links-footer a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links-footer a:hover {
+            color: var(--light-color);
+            transform: translateY(-3px);
+        }
+        
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1000;
+        }
+        
+        .scroll-indicator.visible {
+            opacity: 1;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+        
+        /* Responsive Design - Same as main page with additions */
+        @media (max-width: 1200px) {
+            .hero-content h2 {
+                font-size: 3rem;
+            }
+            
+            .hero-container, .section-container {
+                padding: 3rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .workplace-hero {
+                height: auto;
+                min-height: auto;
+                padding: 100px 2rem 3rem;
+            }
+            
+            .hero-container {
+                flex-direction: column;
+            }
+            
+            .hero-content {
+                padding-right: 0;
+                margin-bottom: 3rem;
+                text-align: center;
+            }
+            
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-text, .about-image {
+                transform: none !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-content h2 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-links a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .section {
+                padding: 3rem 1rem;
+            }
+            
+            .section-container {
+                padding: 2rem;
+            }
+            
+            .gallery-grid, .features-grid, .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-card, .gallery-item, .team-member {
+                transform: translateY(30px);
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header id="main-header">
+        <nav>
+            <div class="logo">
+               <h1>Jyoti Model works</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About Us</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="index.html#certificates">Certificates</a></li>
+              <!--  <li><a href="workplace.html" class="active">Workplace</a></li> -->
+                <li><a href="indexcontact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <i class="fas fa-chevron-down"></i>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="workplace-hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h2>Our Innovative Workplace</h2>
+                <p>Discover the cutting-edge environment where our team of scientists and researchers collaborate to push the boundaries of scientific discovery every day.</p>
+                <div class="hero-buttons">
+                    <a href="#video-tour" class="btn btn-primary">Take a Video Tour</a>
+                  <!--  <a href="#careers" class="btn btn-secondary">Career Opportunities</a>-->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workplace Features Section -->
+    <section class="section" id="features">
+        <div class="section-container">
+            <h2 class="section-title">World-Class Facilities</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-flask"></i>
+                    <h3>Advanced Laboratories</h3>
+                    <p>State-of-the-art research labs equipped with the latest technology for groundbreaking experiments and analysis.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-microscope"></i>
+                    <h3>Cutting-Edge Equipment</h3>
+                    <p>Access to high-precision instruments and analytical tools that enable our innovative research.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Collaborative Spaces</h3>
+                    <p>Designed to foster creativity and teamwork with open-concept work areas and meeting spaces.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Sustainable Design</h3>
+                    <p>Eco-friendly facilities with green energy solutions and waste reduction systems.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-utensils"></i>
+                    <h3>On-Site Amenities</h3>
+                    <p>Healthy dining options, fitness center, and relaxation spaces for work-life balance.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Safety First</h3>
+                    <p>Rigorous safety protocols and advanced containment systems for all research activities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lab Gallery Section -->
+    <section class="section" id="gallery">
+        <div class="section-container">
+            <h2 class="section-title">Inside Our Labs</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Chemistry Lab">
+                    <div class="gallery-caption">Chemistry Research Lab</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1581093057305-25f0a6dd7f7c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Biotech Lab">
+                    <div class="gallery-caption">Biotechnology Division</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1581093057923-00d588d82b77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Microscopy Center">
+                    <div class="gallery-caption">Advanced Microscopy Center</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Collaboration Space">
+                    <div class="gallery-caption">Team Collaboration Space</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Clean Room">
+                    <div class="gallery-caption">Class 100 Clean Room</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1581093057305-25f0a6dd7f7c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Testing Facility">
+                    <div class="gallery-caption">Product Testing Facility</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section 
+    <section class="section" id="team">
+        <div class="section-container">
+            <h2 class="section-title">Meet Our Team</h2>
+            <div class="team-grid">
+            
+                <div class="team-member">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Dr. Priya Patel">
+                    <h3>Dr. Priya Patel</h3>
+                    <p>Lead Chemist</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Dr. James Wilson">
+                    <h3>Dr. James Wilson</h3>
+                    <p>Director of Research</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>-->
+
+    <!-- Video Tour Section -->
+    <section class="section" id="video-tour">
+        <div class="section-container">
+            <h2 class="section-title">Virtual Tour</h2>
+            <div class="video-tour">
+                <div class="video-container">
+                    <!-- Autoplaying looped video -->
+                    <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1&loop=1&mute=1&playlist=YOUR_VIDEO_ID" 
+                            title="Jyoti Model works Workplace Tour" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Careers Section -->
+    <section class="section" id="careers">
+        <div class="section-container">
+            <h2 class="section-title">Join Our Team</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>At Jyoti Model works, we're always looking for passionate scientists, researchers, and innovators to join our team. We offer competitive salaries, comprehensive benefits, and the opportunity to work on groundbreaking projects that make a real difference.</p>
+                    <p>Our workplace culture values collaboration, creativity, and scientific excellence. We provide continuous learning opportunities and support for professional development.</p>
+                    <div class="hero-buttons" style="justify-content: flex-start; margin-top: 2rem;">
+                        <a href="#" class="btn btn-primary">View Current Openings</a>
+                        <a href="#" class="btn btn-secondary">Internship Program</a>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Team Meeting">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#products">Products</a>
+            <a href="index.html#certificates">Certificates</a>
+            <a href="workplace.html">Workplace</a>
+        </div>
+        <div class="social-links-footer">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+        <p>&copy; 2023 Jyoti Model works Inc. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation observer
+            const animateOnScroll = function() {
+                const elementsToAnimate = document.querySelectorAll(
+                    '.hero-content, .section-title, .feature-card, ' +
+                    '.gallery-item, .team-member, .video-container, ' +
+                    '.about-text, .about-image, footer'
+                );
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animated');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                });
+                
+                elementsToAnimate.forEach(element => {
+                    observer.observe(element);
+                });
+            };
+            
+            // Header hide/show on scroll
+            let lastScroll = 0;
+            const header = document.getElementById('main-header');
+            
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll <= 0) {
+                    header.classList.remove('hidden');
+                    return;
+                }
+                
+                if (currentScroll > lastScroll && !header.classList.contains('hidden')) {
+                    // Scroll down
+                    header.classList.add('hidden');
+                } else if (currentScroll < lastScroll && header.classList.contains('hidden')) {
+                    // Scroll up
+                    header.classList.remove('hidden');
+                }
+                
+                lastScroll = currentScroll;
+            });
+            
+            // Scroll indicator
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 100) {
+                    scrollIndicator.classList.remove('visible');
+                } else {
+                    scrollIndicator.classList.add('visible');
+                }
+            });
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Initialize animations
+            animateOnScroll();
+        });
+    </script>
+</body>
+</html>
